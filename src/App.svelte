@@ -15,9 +15,9 @@
     {#if $sidebarState}
       <Sidebar/>
     {/if}
-    <Route path="/agents" component={InfoSection} />
+    <Route path="/" component={InfoSection} />
     <Route path="/calendar" component={Calendar} />
-    <Route path="/" component={AgentsOverview} />
+    <Route path="/agents" component={AgentsOverview} />
   </Router>
 </main>
 

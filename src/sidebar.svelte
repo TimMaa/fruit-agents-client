@@ -27,11 +27,13 @@
       href: '/agents'
     }
   ]
+
+  const linkProps = () => ({ class: "btn sidebar-action-item" });
 </script>
 
 <div class="sidebar-container" transition:fly="{{ x: -400, duration: 500 }}">
   {#each sidebarItems as item}
-    <Link className="btn sidebar-action-item" to={item.href}>
+    <Link getProps={linkProps} to={item.href}>
       <Icon icon={item.icon}/>
       <span>{item.title}</span>
     </Link>
@@ -53,23 +55,24 @@
     box-shadow: 3px 0px 6px 0px #0ff;
   }
 
-  .sidebar-action-item {
+  :global(.sidebar-action-item) {
     width: 100%;
-    color: white;
+    height: 90px;
+    color: white !important;
     padding-left: 36px;
     margin: 6px 0;
     text-align: left;
-    font-size: 1.5em;
+    font-size: 2em;
 
     display: flex;
     align-items: center;
   }
 
-  .sidebar-action-item > span {
+  :global(.sidebar-action-item > span) {
     margin-left: 48px;
   }
 
-  .sidebar-action-item:hover {
+  :global(.sidebar-action-item:hover) {
     background: #222;
   }
 </style>
