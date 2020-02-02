@@ -1,12 +1,23 @@
 <script>
   import AgentCard from './agent-card.svelte';
-  import { agents } from '../store.js';
+  import { queryGQL } from '../services/graphql.js';
+
+  async function getAgents() {
+    const res = await queryGQL(`{ agents { id name photoUrl } }`)
+    return res.data.agents;
+  }
+
+  let agentsPromise = getAgents();
 </script>
 
 <div class="agent-container">
-  {#each $agents as agent}
-    <AgentCard {agent}></AgentCard>
-  {/each}
+  {#await agentsPromise}
+    <div>...loading</div>
+  {:then agents}
+    {#each agents as agent}
+      <AgentCard {agent}></AgentCard>
+    {/each}
+  {/await}
 </div>
 
 <style>

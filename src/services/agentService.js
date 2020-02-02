@@ -3,6 +3,7 @@ import { get } from 'svelte/store';
 import { agents } from '../store.js';
 import { env } from '../environment.js';
 import { errorHandler } from './errorService.js';
+import query from './graphql.js';
 
 const addAgent = agentData => {
   fetch(`${env.apiUrl}/agents`, {
@@ -20,19 +21,6 @@ const deleteAgent = id => {
   })
     .then(res => res.json())
     .then(() => agents.set(get(agents).filter(agent => agent.id !== id)))
-    .catch(errorHandler);
-}
-
-/**
- * Returns the list of all agents currently registered
- * @returns {Array<{id: string, name: string, avgRating: number, }>} Array of all agents
- */
-const getAgents = () => {
-  fetch(`${env.apiUrl}/agents`, {
-    method: 'GET'
-  })
-    .then(res => res.json())
-    .then(agentList => agents.set(agentList))
     .catch(errorHandler);
 }
 

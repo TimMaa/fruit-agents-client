@@ -2,7 +2,7 @@
   import { faAngleRight, faBaby } from '@fortawesome/free-solid-svg-icons';
   import Icon from 'fa-svelte'
   import moment from 'moment';
-  import { slide } from 'svelte/transition';
+  import { fly, slide } from 'svelte/transition';
 
   export let agent;
   let expanded; 
@@ -20,7 +20,7 @@
   }
 </script>
 
-<div class="agent-card-container">
+<div transition:fly="{{ x: (Math.random()*400 * (Math.random() > 0.5 ? 1 : -1)), y: (Math.random()*200 * (Math.random() > 0.5 ? 1 : -1)), duration: 750 }}" class="agent-card-container">
   <div class="agent-card">
     <div class="agent-card-image"><Icon icon={faBaby}></Icon></div>
     <span class="agent-card-title">{agent.name}</span>
