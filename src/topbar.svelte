@@ -1,8 +1,8 @@
 <script>
   import Icon from 'fa-svelte'
   import { faBars } from '@fortawesome/free-solid-svg-icons'
-  import { tweened } from 'svelte/motion' 
-  import { get } from 'svelte/store' 
+  import { tweened } from 'svelte/motion'
+  import { get } from 'svelte/store'
 
   import { sidebarState } from './store.js'
 
@@ -38,7 +38,7 @@
 
   .ok-menu-button {
     color: white;
-    font-size: 2em;
+    font-size: 3em;
 
     display: flex;
     align-items: center;
@@ -49,13 +49,13 @@
     margin-left: 36px;
     color: white;
     text-transform: uppercase;
-    font-size: 4em;
+    font-size: 5em;
     font-weight: 100;
   }
 
   @media (max-width: 780px) {
     .ok-title {
-      font-size: 2em;
+      font-size: 3em;
     }
   }
 </style>

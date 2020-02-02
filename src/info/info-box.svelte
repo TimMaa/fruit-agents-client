@@ -1,7 +1,11 @@
 <script>
+  import { fade } from 'svelte/transition';
+
+  import ratingService from '../services/ratingService.js';
+  import { ratings } from '../store.js';
+
   export let boxIdx;
-  export let color;
-  export let name;
+  export let mission;
 
   const titles = [
     'Previous Agent',
@@ -9,45 +13,32 @@
     'Next Agent',
   ];
 
-  let ratingDone = false;
+  const rate = (id, rating) => ratingService.addRating(id, rating);
 
-  const rate = (rating) => {
-    // TODO: Some backend call to submit the rating
-    if(ratingDone) return;
-    fetch(`mybackend/rate/${boxIdx}/${rating}`)
-    ratingDone = true;
-    
-  }
+  $: missionRating = $ratings.find(rating => rating.id === mission.agentInfo.id) || {};
 </script>
-
-<div class="box" style="--color:{color}">
+<div>
   <h2 class="box-title">{titles[boxIdx]}</h2>
-  <span class="agent">{name}</span>
+  <span class="agent">{mission.agentInfo.name}</span>
   {#if boxIdx !== 2}
     <div class="rating-container">
       Rate now!
       <div class="rating">
-        <button class="btn" on:click|once={() => rate(1)}>&#9734;</button>
-        <button class="btn" on:click|once={() => rate(2)}>&#9734;</button>
-        <button class="btn" on:click|once={() => rate(3)}>&#9734;</button>
-        <button class="btn" on:click|once={() => rate(4)}>&#9734;</button>
-        <button class="btn" on:click|once={() => rate(5)}>&#9734;</button>
+        {#each [1,2,3,4,5] as val}
+          <button class="btn" on:click|once={() => rate(mission.id, val)}>
+            {#if missionRating.rating >= val}
+              <span transition:fade>♥</span>
+            {:else}
+              <span transition:fade>&#9734;</span>
+            {/if}
+          </button>
+        {/each}
       </div>
     </div>
   {/if}
 </div>
 
 <style>
-  .box {
-    color: #333;
-    background-color: var(--color);
-    min-width: 400px;
-    width: 25%;
-    height: 240px;
-    margin: 20px;
-    padding: 1em;
-  }
-
   .box-title {
     opacity: .9;
     margin: 0;
@@ -68,5 +59,9 @@
     color: #333;
     margin: 0;
     cursor: pointer;
+  }
+
+  .rating > button.rated {
+    background-color: #333;
   }
 </style>
