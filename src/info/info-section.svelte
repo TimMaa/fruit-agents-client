@@ -29,7 +29,7 @@
 
 <div class="info-container">
   {#each boxes as box, idx}
-    <div class="box" transition:fade="{{delay: idx*250, duration: 500}}" style="--color:{box.color}">
+    <div class="box" in:fade="{{delay: idx*250, duration: 500}}" style="--color:{box.color}">
       <InfoBox boxIdx={idx} mission={loadMission(box.missionId)}/>
     </div>
   {/each}

@@ -27,9 +27,9 @@
         {#each [1,2,3,4,5] as val}
           <button class="btn" on:click|once={() => rate(mission.id, val)}>
             {#if missionRating.rating >= val}
-              <span transition:fade>♥</span>
+              <span>♥</span>
             {:else}
-              <span transition:fade>&#9734;</span>
+              <span>&#9734;</span>
             {/if}
           </button>
         {/each}

@@ -12,6 +12,8 @@
     sidebarState.set(!$sidebarState);
     buttonRotation.set(get(sidebarState) ? 180 : 0);
   }
+
+  document.body.addEventListener('click', () => get(sidebarState) && menubuttonClickHandler(), true); 
 </script>
 
 <div class="topbar">
