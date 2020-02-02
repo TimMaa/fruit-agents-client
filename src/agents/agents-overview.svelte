@@ -1,14 +1,6 @@
 <script>
   import AgentCard from './agent-card.svelte';
   import { agents } from '../store.js';
-
-  const props = [
-    { id: 'name', label: 'Name' },
-    { id: 'mis-prev', label: 'Previous Mission' },
-    { id: 'mis-next', label: 'Next Mission' },
-    { id: 'rat-prev', label: 'Previous Rating' },
-    { id: 'rat-avg', label: 'Avg. Rating' },
-  ];
 </script>
 
 <div class="agent-container">
@@ -19,7 +11,19 @@
 
 <style>
   .agent-container {
-    display: flex;
-    flex-flow: row wrap;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 1260px) {
+    .agent-container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 780px) {
+    .agent-container {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

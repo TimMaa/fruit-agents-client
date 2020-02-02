@@ -1,3 +1,5 @@
+import moment from "moment"
+
 export const agents = [
   { id: '1', name: 'Player One', avgRating: 2.5 },
   { id: '2', name: 'Player Two', avgRating: 5 },
@@ -10,12 +12,12 @@ export const agents = [
 ]
 
 export const ratings = [
-  { id: '3', date: new Date(), rating: 3 },
-  { id: '2', date: new Date(), rating: 4 },
+  { id: '3', date: moment(), rating: 3 },
+  { id: '2', date: moment(), rating: 4 },
 ]
 
 export const missions = [
-  { id: '1', agentId: '1', start: new Date(), end: new Date() },
-  { id: '2', agentId: '3', start: new Date(), end: new Date() },
-  { id: '3', agentId: '8', start: new Date(), end: new Date() },
+  { id: '1', agentId: '1', start: moment().subtract(14, 'd'), end: moment().subtract(7, 'd') },
+  { id: '2', agentId: '3', start: moment().subtract(7, 'd'), end: moment() },
+  { id: '3', agentId: '8', start: moment(), end: moment().subtract(7, 'd') },
 ]
