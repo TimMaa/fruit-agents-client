@@ -2,34 +2,39 @@
   import Icon from 'fa-svelte'
   import { fly } from 'svelte/transition';
   import { faCalendarAlt, faHome, faList, faPlus } from '@fortawesome/free-solid-svg-icons'
+  import { Link } from 'svelte-routing'
 
   const sidebarItems = [
     {
       icon: faHome,
       title: 'Dashboard',
-      link: '/'
+      href: '/'
     },
     {
       icon: faCalendarAlt,
-      title: 'Calendar'
+      title: 'Calendar',
+      href: '/calendar'
+
     },
     {
       icon: faPlus,
-      title: 'New Agent'
+      title: 'New Agent',
+      href: '/agents/new'
     },
     {
       icon: faList,
-      title: 'Overview'
+      title: 'Overview',
+      href: '/agents'
     }
   ]
 </script>
 
 <div class="sidebar-container" transition:fly="{{ x: -400, duration: 500 }}">
   {#each sidebarItems as item}
-    <a class="btn sidebar-action-item" href={item.link}>
+    <Link className="btn sidebar-action-item" to={item.href}>
       <Icon icon={item.icon}/>
       <span>{item.title}</span>
-    </a>
+    </Link>
   {/each}
 </div>
 
@@ -45,6 +50,7 @@
     padding-top: 100px;
     background-color: #333;
     z-index: 900;
+    box-shadow: 3px 0px 6px 0px #0ff;
   }
 
   .sidebar-action-item {
