@@ -7,7 +7,7 @@
 
 <style>
   .calendar-container {
-    color: #eee;
+    color: var(--fa-light);
     width: 100%;
     font-size: 4em;
     padding-top: 2em;

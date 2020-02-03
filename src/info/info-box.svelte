@@ -56,12 +56,12 @@
     background: none;
     outline: none;
     border: none;
-    color: #333;
+    color: var(--fa-dark);
     margin: 0;
     cursor: pointer;
   }
 
   .rating > button.rated {
-    background-color: #333;
+    background-color: var(--fa-dark);
   }
 </style>

@@ -3,21 +3,35 @@
   import Icon from 'fa-svelte'
   import moment from 'moment';
   import { fly, slide } from 'svelte/transition';
+  
+  import { queryGQL } from '../services/graphql.js';
 
   export let agent;
   let expanded; 
   $: expanded = false;
+  let detailsPromise;
 
   const props = [
     { id: 'mis-prev', label: 'Previous Mission', value: moment().format('DD. MMM') },
     { id: 'mis-next', label: 'Next Mission', value: moment().add(28, 'd').format('DD. MMM') },
-    { id: 'rat-prev', label: 'Previous Rating', value: 3.5 },
     { id: 'rat-avg', label: 'Avg. Rating', value: 1.6 },
   ];
 
+  async function getDetails() {
+    const res = await queryGQL(`{ agent(id: ${agent.id}) { previousMission { end } nextMission { start } averageRating } }`)
+    const details = [ 
+      { label: 'Previous Mission', value: res.data.agent.previousMission ? moment.unix(res.data.agent.previousMission.end).format('DD. MMM') : null },
+      { label: 'Next Mission', value: res.data.agent.nextMission ? moment.unix(res.data.agent.nextMission.start).format('DD. MMM') : null },
+      { label: 'Avg. Rating', value: res.data.agent.averageRating },
+    ]
+    return details;
+  }
+
   const expandClickHandler = () => {
+    detailsPromise = getDetails();
     expanded = !expanded;
   }
+  
 </script>
 
 <div transition:fly="{{ x: (Math.random()*400 * (Math.random() > 0.5 ? 1 : -1)), y: (Math.random()*200 * (Math.random() > 0.5 ? 1 : -1)), duration: 750 }}" class="agent-card-container">
@@ -30,12 +44,16 @@
   </div>
   {#if expanded}
     <div transition:slide class="agent-details">
-      {#each props as prop}
-        <div class="agent-details-category">
-          <div class="category-value">{prop.value || 'n/a'}</div>
-          <div class="category-label">{prop.label}</div>
-        </div>
-      {/each}
+      {#await detailsPromise}
+        ...loading
+      {:then props}
+        {#each props as prop}
+          <div class="agent-details-category">
+            <div class="category-value">{prop.value || 'n/a'}</div>
+            <div class="category-label">{prop.label}</div>
+          </div>
+        {/each}
+      {/await}
     </div>
   {/if}
 </div>
@@ -48,7 +66,7 @@
 
   .agent-card {
     height: 150px;
-    background: #0ff;
+    background: var(--fa-blue);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -83,9 +101,9 @@
 
   .agent-details {
     height: 180px;
-    background: #eee;
+    background: var(--fa-light);
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 
   .agent-details-category {

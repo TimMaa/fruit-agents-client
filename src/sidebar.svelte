@@ -28,10 +28,12 @@
     }
   ]
 
+  const colors = [ '--fa-red', '--fa-green', '--fa-blue', '--fa-yellow' ];
+
   const linkProps = () => ({ class: "btn sidebar-action-item" });
 </script>
 
-<div class="sidebar-container" transition:fly="{{ x: -400, duration: 500 }}">
+<div class="sidebar-container" transition:fly="{{ x: -400, duration: 500 }}" style="--shadow-color: var({colors[Math.floor(Math.random() * colors.length)]})">
   {#each sidebarItems as item}
     <Link getProps={linkProps} to={item.href}>
       <Icon icon={item.icon}/>
@@ -50,10 +52,20 @@
     max-width: 100vw;
     height: 100%;
     padding-top: 100px;
-    background-color: #333;
+    background-color: var(--fa-dark);
     z-index: 900;
-    box-shadow: 3px 0px 6px 0px #0ff;
+    box-shadow: 10px 0px 30px 0px var(--shadow-color);
+    animation: pulse 2s infinite alternate;
   }
+  
+@keyframes pulse {
+  0% {
+    box-shadow: 10px 0px 30px 0px var(--shadow-color);
+  }
+  100% {
+    box-shadow: -5px 0px 20px 0px var(--shadow-color);
+  }
+}
 
   :global(.sidebar-action-item) {
     width: 100%;

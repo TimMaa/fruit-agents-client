@@ -28,7 +28,7 @@
     position: absolute;
     left: 0;
     top: 0;
-    background-color: #333;
+    background-color: var(--fa-dark);
     box-sizing: border-box;
     height: 90px;
     width: 100%;

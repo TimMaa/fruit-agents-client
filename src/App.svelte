@@ -22,8 +22,17 @@
 </main>
 
 <style>
+  :global(html) {
+    --fa-dark: #333;
+    --fa-light: #eee;
+    --fa-red: #ff6680;
+    --fa-green: #00ff00;
+    --fa-blue: #00ffff;
+    --fa-yellow: #ffff00;
+  }
+
   :global(body, html) {
-    background-color: #333;
+    background-color: var(--fa-dark);
     padding: 0;
     margin: 0;
     font-size: 12px;
@@ -34,7 +43,7 @@
     background: none;
     outline: none;
     border: none;
-    color: white;
+    color: var(--fa-light);
     padding: 12px;
     margin: 0;
     cursor: pointer;

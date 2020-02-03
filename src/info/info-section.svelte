@@ -7,15 +7,15 @@
 
   const boxes = [
     {
-      color: '#ff6680',
+      color: 'var(--fa-red)',
       missionId: '1',
     },
     {
-      color: '#00ff00',
+      color: 'var(--fa-green)',
       missionId: '2',
     },
     {
-      color: 'yellow',
+      color: 'var(--fa-yellow)',
       missionId: '3',
     }
   ]
@@ -46,7 +46,7 @@
   }
 
   .box {
-    color: #333;
+    color: var(--fa-dark);
     background-color: var(--color);
     min-width: 400px;
     width: 25%;
