@@ -57,6 +57,7 @@
     text-align: center;
     margin: 0 auto;
     padding-top: 100px;
+    height: calc(100vh - 100px);
 
     display: flex;
     flex-direction: column;

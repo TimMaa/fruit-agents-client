@@ -25,7 +25,7 @@
 
 <style>
   .topbar {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     background-color: var(--fa-dark);

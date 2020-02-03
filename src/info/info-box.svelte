@@ -45,11 +45,11 @@
   }
 
   .agent {
-    font-size: 4em;
+    font-size: 5em;
   }
 
   .rating {
-    font-size: 2em;
+    font-size: 3em;
   }
 
   .rating > button {

@@ -45,7 +45,7 @@
 <style>
   .sidebar-container {
     box-sizing: border-box;
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
     width: 400px;
