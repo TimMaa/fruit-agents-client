@@ -36,7 +36,9 @@
 
 <div transition:fly="{{ x: (Math.random()*400 * (Math.random() > 0.5 ? 1 : -1)), y: (Math.random()*200 * (Math.random() > 0.5 ? 1 : -1)), duration: 750 }}" class="agent-card-container">
   <div class="agent-card">
-    <div class="agent-card-image"><Icon icon={faBaby}></Icon></div>
+    <div class="agent-card-image" style="background-image: url({agent.photoUrl})">
+      {#if !agent.photoUrl}<Icon icon={faBaby}></Icon>{/if}
+    </div>
     <span class="agent-card-title">{agent.name}</span>
     <button class="agent-card-expand" on:click={expandClickHandler}>
       <Icon icon={faAngleRight}></Icon>
@@ -82,8 +84,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #999;
     font-size: 5em;
+    background-position: center;
+    background-size: 100%;
   }
 
   .agent-card-image > * {
