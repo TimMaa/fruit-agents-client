@@ -15,11 +15,11 @@
 
   const rate = (id, rating) => ratingService.addRating(id, rating);
 
-  $: missionRating = $ratings.find(rating => rating.id === mission.agentInfo.id) || {};
+  $: missionRating = $ratings.find(rating => rating.id === mission.agent.id) || {};
 </script>
 <div>
   <h2 class="box-title">{titles[boxIdx]}</h2>
-  <span class="agent">{mission.agentInfo.name}</span>
+  <span class="agent">{mission.agent.name}</span>
   {#if boxIdx !== 2}
     <div class="rating-container">
       Rate now!

@@ -1,38 +1,49 @@
 <script>
-  import { get } from 'svelte/store';
   import { fade } from 'svelte/transition';
+  import { get } from 'svelte/store';
 
-  import InfoBox from './info-box.svelte';
   import { agents, missions } from '../store.js';
+  import InfoBox from './info-box.svelte';
+  import { queryGQL } from '../services/graphql.js';
 
-  const boxes = [
-    {
-      color: 'var(--fa-red)',
-      missionId: '1',
-    },
-    {
-      color: 'var(--fa-green)',
-      missionId: '2',
-    },
-    {
-      color: 'var(--fa-yellow)',
-      missionId: '3',
-    }
-  ]
+  let boxesPromise;
 
-  const loadMission = id => {
-    const missionInfo = get(missions).find(m => m.id === id);
-    const agentInfo = get(agents).find(a => a.id === missionInfo.agentId);
-    return { id, agentInfo }
+  async function getMissionBoxes() {
+    const boxes = await Promise.all([
+      queryGQL('{ previousMission { agent { id name } } }'),
+      queryGQL('{ activeMission { agent { id name } } }'),
+      queryGQL('{ nextMission { agent { id name } } }'),
+    ]).then(([previous, active, next]) => [
+      {
+        color: 'var(--fa-red)',
+        mission: previous.data.previousMission,
+      },
+      {
+        color: 'var(--fa-green)',
+        mission: active.data.activeMission,
+      },
+      {
+        color: 'var(--fa-yellow)',
+        mission: next.data.nextMission,
+      }
+    ]);
+    console.log(boxes);
+    return boxes;
   }
+
+  $: boxesPromise = getMissionBoxes();
 </script>
 
 <div class="info-container">
-  {#each boxes as box, idx}
-    <div class="box" in:fade="{{delay: idx*250, duration: 500}}" style="--color:{box.color}">
-      <InfoBox boxIdx={idx} mission={loadMission(box.missionId)}/>
-    </div>
-  {/each}
+  {#await boxesPromise}
+    loading...
+  {:then boxes}
+    {#each boxes as box, idx}
+      <div class="box" in:fade="{{delay: idx*250, duration: 500}}" style="--color:{box.color}">
+        <InfoBox boxIdx={idx} mission={box.mission}/>
+      </div>
+    {/each}
+  {/await}
 </div>
 
 <style>
