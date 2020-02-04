@@ -13,14 +13,15 @@
     buttonRotation.set(get(sidebarState) ? 180 : 0);
   }
 
-  document.body.addEventListener('click', () => get(sidebarState) && menubuttonClickHandler(), true); 
+  let menubuttonElement;
+  document.body.addEventListener('click', e => get(sidebarState) && !e.path.find(el => el === menubuttonElement) && menubuttonClickHandler(), true); 
 </script>
 
 <div class="topbar">
-  <button class="btn ok-menu-button" on:click={menubuttonClickHandler} style="transform: rotate({$buttonRotation}deg)">
-    <Icon class="ok-menu-button-icon" icon={faBars}></Icon>
+  <button class="btn menu-button" bind:this={menubuttonElement} on:click={menubuttonClickHandler} style="transform: rotate({$buttonRotation}deg)">
+    <Icon class="menu-button-icon" icon={faBars}></Icon>
   </button>
-  <h1 class="ok-title">Center Fruit Agents</h1>
+  <h1 class="title">Center Fruit Agents</h1>
 </div>
 
 <style>
@@ -38,7 +39,7 @@
     z-index: 1000;
   }
 
-  .ok-menu-button {
+  .menu-button {
     color: white;
     font-size: 3em;
 
@@ -46,7 +47,7 @@
     align-items: center;
   }
 
-  .ok-title {
+  .title {
     margin: 0;
     margin-left: 36px;
     color: white;
@@ -56,7 +57,7 @@
   }
 
   @media (max-width: 780px) {
-    .ok-title {
+    .title {
       font-size: 3em;
     }
   }
