@@ -1,8 +1,9 @@
 <script>
   import { fade } from 'svelte/transition';
 
-  import ratingService from '../services/ratingService.js';
-  import { ratings } from '../store.js';
+  import { gqlQuery, gqlMutation } from '../services/graphql.js';
+  import StarRating from './star-rating.svelte';
+
 
   export let boxIdx;
   export let mission;
@@ -13,27 +14,14 @@
     'Next Agent',
   ];
 
-  const rate = (id, rating) => ratingService.addRating(id, rating);
-
-  $: missionRating = $ratings.find(rating => rating.id === mission.agent.id) || {};
+  const rate = (rating) => gqlMutation(`addRating(missionId: "${mission.id}", score: ${rating}){ id score }`).then(res => console.log(res));
 </script>
 <div>
   <h2 class="box-title">{titles[boxIdx]}</h2>
   <span class="agent">{mission.agent.name}</span>
   {#if boxIdx !== 2}
     <div class="rating-container">
-      Rate now!
-      <div class="rating">
-        {#each [1,2,3,4,5] as val}
-          <button class="btn" on:click|once={() => rate(mission.id, val)}>
-            {#if missionRating.rating >= val}
-              <span>♥</span>
-            {:else}
-              <span>&#9734;</span>
-            {/if}
-          </button>
-        {/each}
-      </div>
+      <StarRating rating={mission.averageRating} rateCb={rate}></StarRating>
     </div>
   {/if}
 </div>
@@ -46,22 +34,5 @@
 
   .agent {
     font-size: 5em;
-  }
-
-  .rating {
-    font-size: 3em;
-  }
-
-  .rating > button {
-    background: none;
-    outline: none;
-    border: none;
-    color: var(--fa-dark);
-    margin: 0;
-    cursor: pointer;
-  }
-
-  .rating > button.rated {
-    background-color: var(--fa-dark);
   }
 </style>

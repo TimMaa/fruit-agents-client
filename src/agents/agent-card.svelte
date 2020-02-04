@@ -4,7 +4,7 @@
   import moment from 'moment';
   import { fly, slide } from 'svelte/transition';
   
-  import { queryGQL } from '../services/graphql.js';
+  import { gqlQuery } from '../services/graphql.js';
 
   export let agent;
   let expanded; 
@@ -18,7 +18,7 @@
   ];
 
   async function getDetails() {
-    const res = await queryGQL(`{ agent(id: ${agent.id}) { previousMission { end } nextMission { start } averageRating } }`)
+    const res = await gqlQuery(`{ agent(id: ${agent.id}) { previousMission { end } nextMission { start } averageRating } }`)
     const details = [ 
       { label: 'Previous Mission', value: res.data.agent.previousMission ? moment.unix(res.data.agent.previousMission.end).format('DD. MMM') : null },
       { label: 'Next Mission', value: res.data.agent.nextMission ? moment.unix(res.data.agent.nextMission.start).format('DD. MMM') : null },

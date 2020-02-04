@@ -2,17 +2,16 @@
   import { fade } from 'svelte/transition';
   import { get } from 'svelte/store';
 
-  import { agents, missions } from '../store.js';
   import InfoBox from './info-box.svelte';
-  import { queryGQL } from '../services/graphql.js';
+  import { gqlQuery } from '../services/graphql.js';
 
   let boxesPromise;
 
   async function getMissionBoxes() {
     const boxes = await Promise.all([
-      queryGQL('{ previousMission { agent { id name } } }'),
-      queryGQL('{ activeMission { agent { id name } } }'),
-      queryGQL('{ nextMission { agent { id name } } }'),
+      gqlQuery('{ previousMission { id averageRating agent { id name } } }'),
+      gqlQuery('{ activeMission { id averageRating agent { id name } } }'),
+      gqlQuery('{ nextMission { id averageRating agent { id name } } }'),
     ]).then(([previous, active, next]) => [
       {
         color: 'var(--fa-red)',

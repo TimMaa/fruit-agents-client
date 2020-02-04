@@ -1,9 +1,9 @@
 <script>
   import AgentCard from './agent-card.svelte';
-  import { queryGQL } from '../services/graphql.js';
+  import { gqlQuery } from '../services/graphql.js';
 
   async function getAgents() {
-    const res = await queryGQL(`{ agents { id name photoUrl } }`)
+    const res = await gqlQuery(`{ agents { id name photoUrl } }`)
     return res.data.agents;
   }
 

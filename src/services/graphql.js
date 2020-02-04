@@ -10,6 +10,6 @@ const client = new ApolloClient({
   version: '1.3',
 });
 
-export const queryGQL = query => {
-  return client.query({ query: gql(query) })
-}
+export const gqlQuery = query => client.query({ query: gql(query) });
+
+export const gqlMutation = mutation => client.mutate({ mutation: gql(`mutation Mutation {${mutation}}`)});
