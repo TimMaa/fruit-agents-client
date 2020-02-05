@@ -2,11 +2,20 @@
   import { Route, Router } from 'svelte-routing'
 
   import AgentsOverview from './agents/agents-overview.svelte'
+  import Calendar from './calendar.svelte'
+  import FruitList from './fruits/fruit-list.svelte'
+  import InfoSection from './info/info-section.svelte'
   import Sidebar from './sidebar.svelte'
   import Topbar from './topbar.svelte'
-  import InfoSection from './info/info-section.svelte'
-  import Calendar from './calendar.svelte'
+
   import { sidebarState } from './store.js'
+
+  const routes = [
+    { path: '/', component: InfoSection },
+    { path: '/agents', component: AgentsOverview },
+    { path: '/calendar', component: Calendar },
+    { path: '/fruits', component: FruitList },
+  ]
 </script>
 
 <main>
@@ -15,9 +24,13 @@
     {#if $sidebarState}
       <Sidebar/>
     {/if}
-    <Route path="/" component={InfoSection} />
-    <Route path="/calendar" component={Calendar} />
-    <Route path="/agents" component={AgentsOverview} />
+    {#each routes as route}
+        <Route path={route.path}>
+          <div style="position: absolute; width: 100%">
+            <svelte:component this={route.component} />
+          </div>
+        </Route>
+    {/each}
   </Router>
 </main>
 
@@ -29,6 +42,7 @@
     --fa-green: #00ff00;
     --fa-blue: #00ffff;
     --fa-yellow: #ffff00;
+    overflow: hidden scroll;
   }
 
   :global(body, html) {

@@ -38,6 +38,7 @@
   .rating > button:hover:before,
   .rating > button:hover ~ button:before {
     content: "\2605";
+    color: var(--fa-light);
     position: absolute;
   }
 </style>

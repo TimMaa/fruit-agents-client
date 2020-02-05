@@ -26,7 +26,6 @@
         mission: next.data.nextMission,
       }
     ]);
-    console.log(boxes);
     return boxes;
   }
 
@@ -38,7 +37,7 @@
     loading...
   {:then boxes}
     {#each boxes as box, idx}
-      <div class="box" in:fade="{{delay: idx*250, duration: 500}}" style="--color:{box.color}">
+      <div class="box" in:fade="{{delay: idx*250, duration: 500}}" out:fade="{{delay: (boxes.length-idx)*250, duration: 500}}" style="--color:{box.color}">
         <InfoBox boxIdx={idx} mission={box.mission}/>
       </div>
     {/each}
