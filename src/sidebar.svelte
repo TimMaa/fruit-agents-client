@@ -1,7 +1,7 @@
 <script>
   import Icon from 'fa-svelte'
   import { fly } from 'svelte/transition';
-  import { faCalendarAlt, faHome, faList, faPlus } from '@fortawesome/free-solid-svg-icons'
+  import { faLemon, faCalendarAlt, faHome, faList, faPlus } from '@fortawesome/free-solid-svg-icons'
   import { Link } from 'svelte-routing'
 
   const sidebarItems = [
@@ -25,6 +25,11 @@
       icon: faList,
       title: 'Overview',
       href: '/agents'
+    },
+    {
+      icon: faLemon,
+      title: 'Fruits',
+      href: '/fruits'
     }
   ]
 
